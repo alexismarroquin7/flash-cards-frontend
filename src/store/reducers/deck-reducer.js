@@ -15,7 +15,7 @@ const initialState = {
 
 export const deckReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Deck.FETCH_DECKS_BY_USER_ID.START:
+    case Deck.FETCH_BY_USER_ID.START:
       return {
         ...state,
         
@@ -29,7 +29,7 @@ export const deckReducer = (state = initialState, action) => {
           }
         }
       }
-    case Deck.FETCH_DECKS_BY_USER_ID.SUCCESS:
+    case Deck.FETCH_BY_USER_ID.SUCCESS:
       return {
         ...state,
 
@@ -45,8 +45,7 @@ export const deckReducer = (state = initialState, action) => {
           }
         }
       }
-
-    case Deck.FETCH_DECKS_BY_USER_ID.FAIL:
+    case Deck.FETCH_BY_USER_ID.FAIL:
       return {
         ...state,
         
@@ -57,6 +56,42 @@ export const deckReducer = (state = initialState, action) => {
           error: {
             ...state.status.error,
             message: action.payload.data.message
+          }
+        }
+      }
+
+    case Deck.CREATE.START:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: true,
+          error: { ...state.status.error, message: '' }
+        }
+      }
+    case Deck.CREATE.SUCCESS:
+      return {
+        ...state,
+        list: [
+          ...state.list,
+          action.payload.data[0]
+        ],
+
+        status: {
+          ...state.status,
+          loading: false,
+          error: { ...state.status.error, message: '' }
+        }
+      }
+    case Deck.CREATE.FAIL:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: action.payload.data.message 
           }
         }
       }
