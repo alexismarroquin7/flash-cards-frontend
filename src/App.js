@@ -1,24 +1,15 @@
-import { Route, Switch, useHistory } from 'react-router';
-import { Decks, LoginForm } from './components';
+import { Route, Switch } from 'react-router';
+import { Decks, LoginForm, PrivateRoute, Home } from './components';
 
 import './App.css';
 
 function App() {
-
-  const history = useHistory();
-
-  const handleRedirect = (path) => {
-    history.push(path)
-  }
-
   return (
-    <div className="App">
-      
-      <button onClick={() => handleRedirect('/login')}>Login</button>
-      
+    <div className="App">    
       <Switch>
         <Route exact path="/login" component={LoginForm}/>
-        <Route exact path="/" component={Decks}/>
+        <PrivateRoute exact path={`/${localStorage.getItem('username')}/decks`} component={Decks}/>
+        <Route exact path="/" component={Home}/>
       </Switch>
     
     </div>
