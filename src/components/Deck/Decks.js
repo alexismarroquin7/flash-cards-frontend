@@ -19,7 +19,14 @@ export function Decks(){
   }, [dispatch]);
 
   return (
-    <div className="Decks">
+    <div 
+      className="Decks"
+      style={{
+        display: 'flex',
+        flexFlow: 'column wrap',
+        alignItems: 'center',
+      }}
+    >
     
     <button onClick={() => handleRedirect(`/${localStorage.getItem('username')}/decks/new`)}>New</button>
     
@@ -30,7 +37,9 @@ export function Decks(){
     {deck.list.length !== 0 &&
 
       deck.list.map(item => (
-        <Deck key={item.deck_id} deck={item}/>
+        <Deck
+          key={item.deck_id} deck={item}
+        />
       ))
     }
     

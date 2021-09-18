@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Auth } from "../../../store";
-
+import { useHistory } from "react-router";
 const initialCredentials = {
   username: '',
   password: ''
@@ -22,11 +22,15 @@ export function LoginForm (){
   }
   
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(Auth.login(credentials));
     setCredentials(initialCredentials);
+    setTimeout(() => {
+      history.push(`/${localStorage.getItem('username')}/decks`)
+    }, 2000);
   }
 
   return (
@@ -37,7 +41,7 @@ export function LoginForm (){
       placeholder="username:"
       onChange={handleChange}
       autoComplete="off"
-      />
+    />
     
     <input
       name="password"
