@@ -1,4 +1,4 @@
-import { axiosWithBaseURL as axios, axiosWithAuth } from "../../utils"
+import { axiosWithBaseURL as axios } from "../../utils"
 
 const ACTION = {
   LOGIN: {
@@ -43,7 +43,7 @@ const logout = () => async dispatch => {
   });  
   
   try {
-    const res = await axiosWithAuth().get('/api/auth/logout');
+    // const res = await axiosWithAuth().get('/api/auth/logout');
     dispatch({
       type: ACTION.LOGOUT.SUCCESS
     });
