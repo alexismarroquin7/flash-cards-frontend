@@ -4,9 +4,26 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { Deck } from "../../store";
 
+const style = {
+  root: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center'
+  },
+  textInput: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'flex-start'
+  },
+  button: {
+    marginTop: '.5rem'
+  }
+}
+
 const initialFormValues = {
   deck_name: '',
-  deck_color: '#a9f5e8'
+  deck_color: '#a9f5e8',
+  deck_description: ''
 };
 
 export const NewDeckForm = () => {
@@ -41,19 +58,32 @@ export const NewDeckForm = () => {
   };
   
   return (
-    <form className="NewDeckForm" onSubmit={handleSubmit}>
-      <input 
-        name="deck_name"
-        type="text"
-        value={values.deck_name}
-        onChange={handleChange}
-        placeholder="Name:"
-        autoComplete="off"
-      />
-
+    <form className="NewDeckForm" onSubmit={handleSubmit} style={style.root}>
+      <h3>New Deck</h3>
+      
+      <label style={style.textInput}>Name:
+        <input 
+          name="deck_name"
+          type="text"
+          value={values.deck_name}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+      </label>
+      
       <ColorOptions values={values} setValues={setValues}/>
 
-      <button type="submit">Submit</button>
+      <label style={style.textInput}>Description:
+        <textarea 
+          name="deck_decription"
+          type=""
+          value={values.deck_description}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+      </label>
+
+      <button style={style.button} type="submit">Submit</button>
     </form>
   );
 }

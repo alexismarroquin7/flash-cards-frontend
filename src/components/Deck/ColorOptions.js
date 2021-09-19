@@ -43,13 +43,26 @@ export const ColorOptions = ({ values, setValues }) => {
   <div  
     style={{
       display: "flex",
-      flexFlow: 'row wrap',
-      alignItems: 'center'
+      flexFlow: 'column wrap',
+      alignItems: 'flex-start',
+      paddingTop: '.5rem',
+      paddingBottom: '.5rem'
     }}
   >
-    {colors.map(color => (
-      <ColorOption key={color.hex} color={color} values={values} setValues={setValues} />
-    ))}
+    <label>Color:</label>
+    <div
+      style={{
+        display: "flex",
+        flexFlow: 'row wrap',
+        alignItems: 'center',
+        paddingTop: '.25rem',
+        paddingBottom: '.25rem'
+      }}
+    >
+      {colors.map(color => (
+        <ColorOption key={color.hex} color={color} values={values} setValues={setValues} />
+      ))}
+    </div>
   </div>
   </div>
   );
