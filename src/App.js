@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router';
-import { Decks, LoginForm, PrivateRoute, Home, NewDeckForm } from './components';
+import { Decks, LoginForm, PrivateRoute, Home, NewDeckForm, Cards } from './components';
 
 import './App.css';
 
@@ -23,6 +23,12 @@ function App() {
           exact
           path={`/${localStorage.getItem('username')}/decks/new`} 
           component={NewDeckForm}
+        />
+        
+        <PrivateRoute
+          exact
+          path={`/${localStorage.getItem('username')}/decks/:deck_id/cards`}
+          component={Cards}
         />
 
         <Route exact path="/" component={Home}/>
