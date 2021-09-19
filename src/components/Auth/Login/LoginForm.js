@@ -2,6 +2,21 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Auth } from "../../../store";
 import { useHistory } from "react-router";
+
+const style = {
+  root: {
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center'
+  },
+  container: {
+    width: '40%',
+    display: 'flex',
+    flexFlow: 'column wrap'
+  }
+}
+
 const initialCredentials = {
   username: '',
   password: ''
@@ -34,24 +49,31 @@ export function LoginForm (){
   }
 
   return (
-  <form className="LoginForm" onSubmit={handleSubmit}>
-    <input
-      name="username"
-      value={credentials.username}
-      placeholder="username:"
-      onChange={handleChange}
-      autoComplete="off"
-    />
-    
-    <input
-      name="password"
-      value={credentials.password}
-      placeholder="password:"
-      onChange={handleChange}
-      autoComplete="off"
-    />
+  <form className="LoginForm" onSubmit={handleSubmit} style={style.root}>
+    <div style={style.container}>
+      <h2>Login</h2>
+      
+      <input
+        name="username"
+        value={credentials.username}
+        placeholder="username:"
+        onChange={handleChange}
+        autoComplete="off"
+      />
+      
+      <input
+        name="password"
+        value={credentials.password}
+        placeholder="password:"
+        onChange={handleChange}
+        autoComplete="off"
+      />
 
-    <button type="submit">Login</button>
+      <div>
+        <button type="submit">Login</button>
+      </div>
+
+    </div>
   </form>
   );
 };

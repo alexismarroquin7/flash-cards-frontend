@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Deck as DeckAction } from "../../store";
+import { Deck as DeckAction, Auth } from "../../store";
 import { Deck } from "./Deck";
 
 export function Decks(){
@@ -27,7 +27,20 @@ export function Decks(){
         alignItems: 'center',
       }}
     >
+      
+    <div>
+      <h2>Decks</h2>
+    </div>
     
+    <button onClick={() => {
+      dispatch(Auth.logout());
+      setTimeout(() => {
+        if(!localStorage.getItem('token')){
+          history.push('/login');
+        }
+      }, 2500);
+    
+    }}>Logout</button>
     <button onClick={() => handleRedirect(`/${localStorage.getItem('username')}/decks/new`)}>New</button>
     
     {deck.status.loading && (
