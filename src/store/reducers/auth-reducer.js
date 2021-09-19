@@ -80,18 +80,42 @@ export const authReducer = (state = initialState, action) => {
         }
       }   
     
-    case Auth.LOGOUT.START:
+    case Auth.LOGOUT.START:  
       return {
-        ...state
-      }   
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: ''
+          }
+        }
+      }
+
     case Auth.LOGOUT.SUCCESS:
+      
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('username');
+      
       return {
-        ...state
+        ...state,
+        ...initialState
       }   
+
     case Auth.LOGOUT.FAIL:
       return {
-        ...state
-      }   
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: action.payload.error.data.message
+          }
+        }
+      }
 
     default:
       return state;
