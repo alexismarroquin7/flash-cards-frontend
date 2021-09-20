@@ -71,6 +71,48 @@ export const cardReducer = (state = initialState, action) => {
           error: { ...state.status.error, message: action.payload.error.data.message }
         }
       }
+
+    case Card.CREATE.START:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: true,
+          error: {
+            ...state.status.error,
+            message: ''
+          }
+        }
+      }
+    case Card.CREATE.SUCCESS:
+      return {
+        ...state,
+        list: [
+          ...state.list,
+          action.payload.data
+        ],
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: ''
+          }
+        }
+      }
+    case Card.CREATE.FAIL:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: action.payload.error.message
+          }
+        }
+      }
+      
     default:
       return state;
   }
