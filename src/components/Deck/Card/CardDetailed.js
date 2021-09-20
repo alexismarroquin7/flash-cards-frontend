@@ -1,8 +1,15 @@
-import { useEffect } from "react";
+//react
+import { useState, useEffect } from "react";
+
+//store
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router";
 import { Card as CardAction } from "../../../store";
-import { PanelSideBySide } from "./PanelSideBySide";
+
+//router
+import { useParams, useHistory } from "react-router";
+
+//components
+import { PanelStacked } from "./PanelStacked";
 
 const style = {
   root: {
@@ -16,16 +23,40 @@ export const CardDetailed = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
+
   const card = useSelector(s => s.card);
   
   useEffect(() => {
     dispatch(CardAction.fetchById(Number(params.card_id)));
   }, [dispatch, params.card_id]);
 
+  const [ display, setDisplay ] = useState({
+    panel_a: true, panel_b: false 
+  });
+
+  const toggleDisplay = () => {
+    setDisplay({ 
+      panel_a: !display.panel_a,
+      panel_b: !display.panel_b
+    });
+  }
+
   return (
     <div className="CardDetailed" style={style.root}>
+
+      <div>
+        <button
+          onClick={toggleDisplay}
+        >Flip</button>
+      </div>
+
       {card.list.length === 1 && (
-        <PanelSideBySide panel_a={card.list[0].panel_a} panel_b={card.list[0].panel_b} />
+        <PanelStacked 
+          panel_a={card.list[0].panel_a} 
+          panel_b={card.list[0].panel_b} 
+          display={display}
+          toggleDisplay={toggleDisplay}
+        />
       )}
       
       <div>
@@ -41,7 +72,7 @@ export const CardDetailed = () => {
           onClick={() => {
             history.push(history.location.pathname + '/edit');
           }}
-        >Edit</button>    
+        >Edit</button>
       </div>
     
     </div>

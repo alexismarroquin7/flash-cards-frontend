@@ -33,7 +33,7 @@ export const Cards = () => {
 
     <div>
       <button onClick={() => {
-        history.push(history.location.pathname + '/new');
+        history.push(`/${localStorage.getItem('username')}/decks/${params.deck_id}/new/card`);
       }}>New</button>
     </div>
 
