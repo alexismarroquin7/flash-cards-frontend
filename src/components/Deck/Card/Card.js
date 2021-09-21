@@ -2,16 +2,28 @@ import { useHistory, useParams } from "react-router";
 
 const style = {
   root: {
+    width: '95%',
+    height: '8rem',
     display: 'flex',
-    flexFlow: 'column wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    flexFlow: 'row wrap',
+    
     border: '1px solid black',
     borderRadius: '5px',
-    width: '95%',
-    padding: '.5rem',
+    
+    paddingLeft: '.5rem',
     marginTop: '.5rem',
     marginBottom: '.5rem',
+  },
+
+  textContainer: {
+    display: 'flex',
+    width: '50%',
+    
+    flexFlow: 'row wrap'
+  },
+
+  textElement: {
+    width: '100%'
   }
 }
 
@@ -28,8 +40,11 @@ export const Card = ({ card }) => {
         history.push(`/${localStorage.getItem('username')}/decks/${params.deck_id}/cards/${card_id}`);
       }}
     > 
-      <p>{panel_a.text}</p>
-      <p>{panel_b.text}</p> 
+      <div style={style.textContainer}>
+        <h4 style={style.textElement}>{panel_a.text}</h4>
+        <p style={style.textElement}>{panel_b.text}</p> 
+      </div>
+      
     </div>
   );
 }

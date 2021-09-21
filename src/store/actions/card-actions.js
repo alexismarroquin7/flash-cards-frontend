@@ -80,13 +80,23 @@ const create = ({
     type: ACTION.CREATE.START
   });
 
+  const cardModel = {
+    deck_id: Number(deck_id),
+    panel_a: {
+      ...panel_a,
+      text: panel_a.text.trim().length !== 0 ? panel_a.text.trim() : null,
+      notes: panel_a.notes.trim().length !== 0 ? panel_a.notes.trim() : null
+    },
+    panel_b: {
+      ...panel_b,
+      text: panel_b.text.trim().length !== 0 ? panel_b.text.trim() : null,
+      notes: panel_b.notes.trim().length !== 0 ? panel_b.notes.trim() : null
+    }
+  }
+
   try {
     const res = await axiosWithAuth()
-    .post('/cards', {
-      deck_id,
-      panel_a,
-      panel_b
-    });
+    .post('/cards', cardModel);
 
     dispatch({
       type: ACTION.CREATE.SUCCESS,

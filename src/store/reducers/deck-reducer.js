@@ -95,6 +95,47 @@ export const deckReducer = (state = initialState, action) => {
           }
         }
       }
+    case Deck.DELETE_BY_ID.START:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: true,
+          error: {
+            ...state.status.error,
+            message: ''
+          }
+        }
+      }
+    case Deck.DELETE_BY_ID.SUCCESS:
+      return {
+        ...state,
+        list: [
+          ...state.list.filter(deck => (
+            deck.deck_id !== Number(action.payload.data.deck_id)
+          ))
+        ],
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: ''
+          }
+        }
+      }
+    case Deck.DELETE_BY_ID.FAIL:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: action.payload.error.data.message 
+          }
+        }
+      }
 
     default:
       return state;

@@ -44,7 +44,9 @@ export function LoginForm (){
     dispatch(Auth.login(credentials));
     setCredentials(initialCredentials);
     setTimeout(() => {
-      history.push(`/${localStorage.getItem('username')}/decks`)
+      if(localStorage.getItem('username')){
+        history.push(`/${localStorage.getItem('username')}/decks`)
+      }
     }, 2000);
   }
 
