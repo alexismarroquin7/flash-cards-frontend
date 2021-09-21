@@ -27,8 +27,11 @@ export const CardDetailed = () => {
   const card = useSelector(s => s.card);
   
   useEffect(() => {
-    dispatch(CardAction.fetchById(Number(params.card_id)));
-  }, [dispatch, params.card_id]);
+    dispatch(
+      CardAction.fetchById(Number(params.card_id))
+    );
+  
+  }, [ dispatch, params.card_id ]);
 
   const [ display, setDisplay ] = useState({
     panel_a: true, panel_b: false 

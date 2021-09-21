@@ -100,7 +100,6 @@ export const NewCardForm = () => {
   
   useEffect(() => {
     setValues(v => {
-      console.log(v)
       return {
         ...v,
         deck_id: params.deck_id
@@ -118,6 +117,7 @@ export const NewCardForm = () => {
     };
 
     if(valid.panel_a.text){
+
       dispatch(
         CardAction.create(values)
       );

@@ -18,6 +18,8 @@ export function Decks(){
     );
   }, [dispatch]);
 
+  
+
   return (
     <div 
       className="Decks"
@@ -51,11 +53,12 @@ export function Decks(){
 
       deck.list.map(item => (
         <Deck
-          key={item.deck_id} deck={item}
+          key={item.deck_id} 
+          deck={item}
         />
       ))
     }
-    
+
     {deck.status.error.message && <h2>{deck.status.error.message}</h2>}
 
     </div>
