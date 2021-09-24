@@ -3,12 +3,6 @@ import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Card as CardAction } from "../../../store";
 
-const style = {
-  root: {
-
-  }
-}
-
 const initialFormValues = {
   card_id: null,
   deck_id: null,
@@ -53,31 +47,52 @@ export const EditCardForm = () => {
   }
 
   return (
-    <form className="UpdateCardForm" style={style.root} onSubmit={handleSubmit}>
+    <form className="EditCardForm" onSubmit={handleSubmit}>
       {card.list.length === 1 && (
-        <>
-        <div className="Panel_A">
-          <h2>Side 1</h2>
-          <label>text:
-          <input 
+        <div className="Panel_Container" >
+        
+        <div className="Panel_A" >
+          <h3>Panel A</h3>
+          
+          <label >text:
+          <input
             name="panel_a.text"
             value={values.panel_a.text}
+            onChange={handleChange}
+          /></label>
+          
+          <label>notes:
+          <textarea 
+          
+            name="panel_a.notes"
+            value={values.panel_a.notes}
             onChange={handleChange}
           /></label>
         
         </div>
         
         <div className="Panel_B">
-          <h2>Side 2</h2>
+          <h3>Panel B</h3>
+          
           <label>text:
           <input 
+          
             name="panel_b.text"
             value={values.panel_b.text} 
             onChange={handleChange}
           /></label>
-      
+
+          <label>notes:
+          <textarea 
+          
+            name="panel_b.notes"
+            value={values.panel_b.notes}
+            onChange={handleChange}
+          /></label>
+
         </div>
-        </>
+      
+      </div>
       )}
       <button 
         onClick={() => {

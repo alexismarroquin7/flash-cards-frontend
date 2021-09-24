@@ -3,21 +3,22 @@ import { useHistory, useParams } from "react-router";
 const style = {
   root: {
     width: '95%',
-    height: '8rem',
+
     display: 'flex',
     flexFlow: 'row wrap',
     
     border: '1px solid black',
     borderRadius: '5px',
     
-    paddingLeft: '.5rem',
-    marginTop: '.5rem',
-    marginBottom: '.5rem',
+    padding: '.5rem',
+    paddingBottom: '1.5rem',
+    marginTop: '.25rem',
+    marginBottom: '.25rem',
   },
-
+  
   textContainer: {
     display: 'flex',
-    width: '50%',
+    height: '50%',
     
     flexFlow: 'row wrap'
   },

@@ -105,6 +105,7 @@ export const NewCardForm = () => {
         deck_id: params.deck_id
       }
     });
+    
   }, [params.deck_id]);
   
   const handleSubmit = (e) => {

@@ -14,8 +14,21 @@ import { PanelStacked } from "./PanelStacked";
 const style = {
   root: {
     width: '100%',
+    padding: '1rem',
     display: 'flex',
-    flexFlow: 'column wrap'
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  buttonContainer: {
+    width: '40%',
+    marginTop: '5rem',
+    padding: '1rem',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-between',
+    alignItems: 'space-between'
   }
 }
 
@@ -47,12 +60,7 @@ export const CardDetailed = () => {
   return (
     <div className="CardDetailed" style={style.root}>
 
-      <div>
-        <button
-          onClick={toggleDisplay}
-        >Flip</button>
-      </div>
-
+      
       {card.list.length === 1 && (
         <PanelStacked 
           panel_a={card.list[0].panel_a} 
@@ -62,7 +70,9 @@ export const CardDetailed = () => {
         />
       )}
       
-      <div>
+      <div
+        style={style.buttonContainer}
+      >
         <button 
           onClick={() => {
             const username = localStorage.getItem('username');
@@ -70,7 +80,11 @@ export const CardDetailed = () => {
             history.push(`/${username}/decks/${deck_id}/cards`);
           }}
         >Back</button>
-        
+      
+        <button
+          onClick={toggleDisplay}
+        >Flip</button>
+      
         <button 
           onClick={() => {
             history.push(history.location.pathname + '/edit');

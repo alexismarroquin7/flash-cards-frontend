@@ -4,6 +4,21 @@ import { useHistory } from "react-router";
 import { Deck as DeckAction, Auth } from "../../store";
 import { Deck } from "./Deck";
 
+const style = {
+  root: {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center'
+  },
+  header: {
+    width: '95%',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  }
+}
+
 export function Decks(){
   
   const dispatch = useDispatch();
@@ -23,27 +38,26 @@ export function Decks(){
   return (
     <div 
       className="Decks"
-      style={{
-        display: 'flex',
-        flexFlow: 'column wrap',
-        alignItems: 'center',
-      }}
+      style={style.root}
     >
-      
     <div>
-      <h2>Decks</h2>
+      <button onClick={() => {
+        dispatch(Auth.logout());
+        setTimeout(() => {
+          if(!localStorage.getItem('token')){
+            history.push('/login');
+          }
+        }, 2500);
+      
+      }}>Logout</button>
     </div>
-    
-    <button onClick={() => {
-      dispatch(Auth.logout());
-      setTimeout(() => {
-        if(!localStorage.getItem('token')){
-          history.push('/login');
-        }
-      }, 2500);
-    
-    }}>Logout</button>
-    <button onClick={() => handleRedirect(`/${localStorage.getItem('username')}/decks/new`)}>New</button>
+      
+    <div
+      style={style.header}
+    >
+      <h2>Decks</h2>
+      <button onClick={() => handleRedirect(`/${localStorage.getItem('username')}/decks/new`)}>New</button>
+    </div>
     
     {deck.status.loading && (
       <h2>Loading...</h2>
