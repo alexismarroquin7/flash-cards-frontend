@@ -10,6 +10,13 @@ const style = {
     flexFlow: 'column wrap',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  header: {
+    width: '95%',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 }
 
@@ -27,16 +34,23 @@ export const Cards = () => {
   return (
   <div className="Cards" style={style.root}>
     
-    <div>
+    <div
+      style={style.header}
+    >
+    
       <h2>Cards</h2>
-    </div>
-
-    <div>
+      
+      <input 
+        placeholder="Filter by text"
+      />
+    
+      
       <button onClick={() => {
         history.push(`/${localStorage.getItem('username')}/decks/${params.deck_id}/new/card`);
       }}>New</button>
     </div>
 
+    
     {
       card.list.length === 0 &&
       card.status.loading === false &&

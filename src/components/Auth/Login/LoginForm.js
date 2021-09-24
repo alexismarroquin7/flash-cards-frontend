@@ -3,19 +3,21 @@ import { useDispatch } from "react-redux";
 import { Auth } from "../../../store";
 import { useHistory } from "react-router";
 
-const style = {
-  root: {
-    width: '100%',
-    display: 'flex',
-    flexFlow: 'column wrap',
-    alignItems: 'center'
-  },
-  container: {
-    width: '40%',
-    display: 'flex',
-    flexFlow: 'column wrap'
-  }
-}
+import "./LoginForm.css";
+
+// const style = {
+//   root: {
+//     width: '100%',
+//     display: 'flex',
+//     flexFlow: 'column wrap',
+//     alignItems: 'center'
+//   },
+//   container: {
+//     width: '40%',
+//     display: 'flex',
+//     flexFlow: 'column wrap'
+//   }
+// }
 
 const initialCredentials = {
   username: '',
@@ -51,27 +53,30 @@ export function LoginForm (){
   }
 
   return (
-  <form className="LoginForm" onSubmit={handleSubmit} style={style.root}>
-    <div style={style.container}>
-      <h2>Login</h2>
+  <form className="LoginForm" onSubmit={handleSubmit}>
+    <div className="LoginForm__container">
       
+      <div>
+        <h2>Login</h2>
+      </div>
+      
+      <label>Username:
       <input
         name="username"
         value={credentials.username}
-        placeholder="username:"
         onChange={handleChange}
         autoComplete="off"
-      />
+      /></label>
       
+      <label>Password:
       <input
         name="password"
         value={credentials.password}
-        placeholder="password:"
         onChange={handleChange}
         autoComplete="off"
-      />
+      /></label>
 
-      <div>
+      <div className="LoginForm__container__buttonContainer">
         <button type="submit">Login</button>
       </div>
 

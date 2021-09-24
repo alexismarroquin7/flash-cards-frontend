@@ -14,8 +14,19 @@ import { rootReducer } from "./store";
 
 import './index.css';
 
+const persistedState = localStorage.getItem('reduxState') 
+? JSON.parse(localStorage.getItem('reduxState'))
+: {};
+
 const middleware = applyMiddleware(thunk, logger);
-const store = createStore(rootReducer, middleware);
+const store = createStore(rootReducer, persistedState, middleware);
+
+store.subscribe(() => {
+  localStorage.setItem(
+    'reduxState',
+    JSON.stringify(store.getState())
+  );
+});
 
 ReactDOM.render(
   <Provider store={store}>
