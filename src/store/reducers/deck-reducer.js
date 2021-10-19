@@ -1,7 +1,16 @@
 import { Deck } from "../actions";
+import { shuffleArray } from "../../utils";
 
 const initialState = {
   list: [],
+
+  review: {
+    queue: [],
+    result: {
+      correct: [],
+      incorrect: []
+    }
+  },
 
   status: {
     loading: false,
@@ -133,6 +142,99 @@ export const deckReducer = (state = initialState, action) => {
           error: {
             ...state.status.error,
             message: action.payload.error.data.message 
+          }
+        }
+      }
+  
+    case Deck.REVIEW.SORT_CARDS.SHUFFLE:
+      const [deck] = state.list.filter((deck) => (
+        deck.deck_id === action.payload.deck_id
+      ));
+
+      let shuffledDeck;
+
+      if(action.payload.filter){
+        if(action.payload.filter === "INCORRECT"){
+          shuffledDeck = shuffleArray(state.review.result.incorrect)
+          
+        } else if(action.payload.filter === "CORRECT"){
+          shuffledDeck = shuffleArray(state.review.result.correct)
+        }  
+      } else {
+        
+        shuffledDeck = shuffleArray(deck.cards)
+      }
+      
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          queue: shuffledDeck,
+          result: {
+            ...state.review.result,
+            correct: [],
+            incorrect: []
+          }
+        }
+
+      }
+    case Deck.REVIEW.SORT_CARDS.ASC:
+      return {
+        ...state
+      }
+    case Deck.REVIEW.SORT_CARDS.DESC:
+      return {
+        ...state
+      }
+
+    case Deck.REVIEW.CARD_ANSWER.CORRECT:
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          result: {
+            ...state.review.result,
+            correct: [
+              ...state.review.result.correct,
+              state.review.queue[0]
+            ]
+          }
+        }
+      }
+    
+    case Deck.REVIEW.CARD_ANSWER.INCORRECT:
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          result: {
+            ...state.review.result,
+            incorrect: [
+              ...state.review.result.incorrect,
+              state.review.queue[0]
+            ]
+          }
+        }
+      }
+
+    case Deck.REVIEW.DEQUEUE_CARD:
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          queue: state.review.queue.filter((_, i) => i !== 0)
+        }
+      }
+
+    case Deck.REVIEW.CLEAR.RESULTS:
+      return {
+        ...state,
+        review: {
+          ...state.review,
+          result: {
+            ...state.review.result,
+            correct: [],
+            incorrect: []
           }
         }
       }

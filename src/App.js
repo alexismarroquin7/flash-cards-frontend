@@ -2,14 +2,17 @@ import { Route, Switch } from 'react-router';
 import {
   Decks, LoginForm, PrivateRoute, 
   Home, NewDeckForm, Cards, CardDetailed,
-  NewCardForm, EditCardForm
+  NewCardForm, EditCardForm, DeckReview,
+  DeckReviewForm, ReviewResults
 } from './components';
 
 import './App.css';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const username = useSelector(s => s.auth.username);
   return (
-    <div className="App">    
+    <div className="App">
       <Switch>
         <Route exact path="/" component={Home}/>
 
@@ -21,38 +24,56 @@ function App() {
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks`} 
+          path={`/${username}/decks`} 
           component={Decks}
         />
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks/new`} 
+          path={`/${username}/decks/new`} 
           component={NewDeckForm}
         />
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks/:deck_id/cards`}
+          path={`/${username}/decks/:deck_id/cards`}
           component={Cards}
         />
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks/:deck_id/cards/:card_id`}
+          path={`/${username}/decks/:deck_id/cards/:card_id`}
           component={CardDetailed}
         />
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks/:deck_id/new/card`}
+          path={`/${username}/decks/:deck_id/new/card`}
           component={NewCardForm}
         />
         
         <PrivateRoute
           exact
-          path={`/${localStorage.getItem('username')}/decks/:deck_id/cards/:card_id/edit`}
+          path={`/${username}/decks/:deck_id/cards/:card_id/edit`}
           component={EditCardForm}
+        />
+        
+        <PrivateRoute
+          exact
+          path={`/${username}/decks/:deck_id/review`}
+          component={DeckReview}
+        />
+
+        <PrivateRoute
+          exact
+          path={`/${username}/decks/:deck_id/review-setup`}
+          component={DeckReviewForm}
+        />
+        
+        <PrivateRoute
+          exact
+          path={`/${username}/decks/:deck_id/review-results`}
+          component={ReviewResults}
         />
 
       </Switch>

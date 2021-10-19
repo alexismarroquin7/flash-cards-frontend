@@ -2,14 +2,14 @@ import { axiosWithBaseURL as axios, axiosWithAuth } from "../../utils"
 
 const ACTION = {
   LOGIN: {
-    START: "LOGIN_START",
-    SUCCESS: "LOGIN_SUCCESS",
-    FAIL: "LOGIN_FAIL",
+    START: "AUTH__LOGIN--START",
+    SUCCESS: "AUTH__LOGIN--SUCCESS",
+    FAIL: "AUTH__LOGIN--FAIL",
   },
   LOGOUT: {
-    START: "LOGOUT_START",
-    SUCCESS: "LOGOUT_SUCCESS",
-    FAIL: "LOGOUT_FAIL",
+    START: "AUTH__LOGOUT--START",
+    SUCCESS: "AUTH__LOGOUT--SUCCESS",
+    FAIL: "AUTH__LOGOUT--FAIL",
   },
 };
 

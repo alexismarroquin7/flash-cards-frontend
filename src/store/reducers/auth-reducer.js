@@ -106,6 +106,11 @@ export const authReducer = (state = initialState, action) => {
       }   
 
     case Auth.LOGOUT.FAIL:
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('username');
+      localStorage.removeItem('reduxState');
+      
       return {
         ...state,
         status: {

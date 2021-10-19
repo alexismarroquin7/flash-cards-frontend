@@ -28,6 +28,7 @@ export function LoginForm (){
 
   
   const [credentials, setCredentials] = useState(initialCredentials);
+  const [showPassword, setShowPassword] = useState(false);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,13 +69,23 @@ export function LoginForm (){
         autoComplete="off"
       /></label>
       
+      <div>
       <label>Password:
       <input
         name="password"
         value={credentials.password}
         onChange={handleChange}
         autoComplete="off"
-      /></label>
+        type={!showPassword ? "password" : "text"}
+      />
+      </label>
+
+      <button onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowPassword(!showPassword);
+      }}>Show Password</button>
+      </div>
 
       <div className="LoginForm__container__buttonContainer">
         <button type="submit">Login</button>
