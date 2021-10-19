@@ -26,7 +26,12 @@ export const Cards = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const card = useSelector(s => s.card);
+  const auth = useSelector(s => s.auth);
 
+  const deck = useSelector(
+    s => s.deck.list.filter(d => d.deck_id === Number(params.deck_id))[0]
+  );
+  
   useEffect(() => {
     dispatch(CardAction.fetchByDeckId(params.deck_id));
   }, [dispatch, params.deck_id]);
@@ -38,16 +43,54 @@ export const Cards = () => {
       style={style.header}
     >
     
-      <h2>Cards</h2>
+    <div
+        style={{
+          display: "flex",
+          flexFlow: "row wrap",
+          justifyContent: "space-between"
+        }}
+        >
+        <h2>
+          / <a style={{color: "black"}} href={`/${auth.username}/decks`}>
+              {auth.username}
+            </a>
+        </h2>
+        
+        <h2
+          style={{
+            paddingLeft: ".5rem"
+          }}
+        >
+          / <a style={{color: "black"}} href={`/${auth.username}/decks`}>
+            decks
+            </a>
+        </h2>
+
+        <h2
+          style={{
+            paddingLeft: ".5rem"
+          }}
+        >
+          / <a style={{color: "black"}} href={`/${auth.username}/decks/${deck.name}/cards`}>
+            {deck.deck_name}
+            </a>
+        </h2>
+      </div>
       
       <input 
         placeholder="Filter by text"
       />
     
-      
-      <button onClick={() => {
-        history.push(`/${localStorage.getItem('username')}/decks/${params.deck_id}/new/card`);
-      }}>New</button>
+      <div>
+        <button onClick={() => {
+          history.push(`/${auth.username}/decks/${params.deck_id}/review-setup`);
+        }}>Review</button>
+
+        <button onClick={() => {
+          history.push(`/${auth.username}/decks/${params.deck_id}/new/card`);
+        }}>New</button>
+      </div>
+    
     </div>
 
     
@@ -63,14 +106,7 @@ export const Cards = () => {
     {card.list.length !== 0 && card.list.map(cardItem => {
       return <Card key={cardItem.card_id} card={cardItem} /> 
     })}
-
-    <div>
-      <button onClick={() => {
-        const username = localStorage.getItem('username');
-        history.push(`/${username}/decks`);
-      }}>Back</button>
-    </div>
-  
+    
   </div>
   );
 }

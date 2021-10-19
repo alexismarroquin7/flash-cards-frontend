@@ -1,6 +1,8 @@
 export const ColorOption = ({ color, values, setValues }) => {
   return (
-  <div key={color.hex} className="colorOption"
+  <div 
+    key={color.hex} 
+    className="colorOption"
     style={{
       width: color.hex === values.deck_color ? "40px" : "34px",
       height: color.hex === values.deck_color ? "40px" : "34px",

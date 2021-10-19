@@ -23,15 +23,16 @@ export function Decks(){
   
   const dispatch = useDispatch();
   const deck = useSelector(state => state.deck);
+  const auth = useSelector(state => state.auth);
   
   const history = useHistory();
   const handleRedirect = (path) => history.push(path);
   
   useEffect(() => {
     dispatch(
-      DeckAction.fetchByUserId(localStorage.getItem('user_id'))
+      DeckAction.fetchByUserId(auth.user_id)
     );
-  }, [dispatch]);
+  }, [dispatch, auth.user_id]);
 
   
 
@@ -54,8 +55,32 @@ export function Decks(){
       
     <div
       style={style.header}
-    >
-      <h2>Decks</h2>
+      >
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "row wrap",
+          justifyContent: "space-between"
+        }}
+        >
+        <h2>
+          / <a style={{color: "black"}} href={`/${auth.username}/decks`}>
+              {auth.username}
+            </a>
+        </h2>
+        
+        <h2
+          style={{
+            paddingLeft: ".5rem"
+          }}
+        >
+          / <a style={{color: "black"}} href={`/${auth.username}/decks`}>
+            decks
+            </a>
+        </h2>
+      </div>
+      
+      
       <button onClick={() => handleRedirect(`/${localStorage.getItem('username')}/decks/new`)}>New</button>
     </div>
     

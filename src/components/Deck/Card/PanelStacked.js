@@ -5,7 +5,12 @@ const style = {
     justifyContent: 'space-evenly',
   },
   panel: {
-    width: '45vw',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-evenly',
+
+    width: '70vw',
+    height: '40vw',
     padding: '.5rem',
     border: '1px solid black'
   },
@@ -16,6 +21,23 @@ const style = {
     alignItems: 'center'
   }
 }
+const Panel = ({ panel, toggleDisplay }) => {
+  return (
+    <div className="Panel" style={style.panel} onClick={toggleDisplay}>
+
+    <div style={style.panelItem}>
+      <h1>{panel.text}</h1>
+    </div>
+
+    {panel.notes && (
+      <div style={style.panelItem}>
+        <p>notes:</p>
+        <p>{panel.notes}</p>
+      </div>
+    )}
+    </div>
+  )
+}
 
 export const PanelStacked = ({ panel_a, panel_b, display, toggleDisplay }) => {
 
@@ -23,35 +45,11 @@ export const PanelStacked = ({ panel_a, panel_b, display, toggleDisplay }) => {
   <div className="PanelStacked" style={style.root}>
   
     {display.panel_a && (
-      <div className="Panel_A" style={style.panel} onClick={toggleDisplay}>
-
-        <div style={style.panelItem}>
-          <h3>{panel_a.text}</h3>
-        </div>
-
-        {panel_a.notes && (
-          <div style={style.panelItem}>
-            <p>notes:</p>
-            <p>{panel_a.notes}</p>
-          </div>
-        )}
-      </div>
+      <Panel panel={panel_a} toggleDisplay={toggleDisplay}/>
     )}
 
     {display.panel_b && (
-      <div className="Panel_B" style={style.panel} onClick={toggleDisplay}>
-        
-        <div style={style.panelItem}>
-          <h3>{panel_b.text}</h3>
-        </div>
-
-        {panel_b.notes && (
-          <div style={style.panelItem}>
-            <p>notes:</p>
-            <p>{panel_b.notes}</p>
-          </div>
-        )}
-      </div>
+      <Panel panel={panel_b} toggleDisplay={toggleDisplay} />
     )}
   
   </div>

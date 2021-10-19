@@ -19,7 +19,8 @@ const style = {
   deleteDeckConfirmation: {
     display: 'flex',
     flexFlow: 'row wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: "center"
   }
 }
 
@@ -31,7 +32,6 @@ export const Deck = ({ deck }) => {
   const dispatch = useDispatch();
 
   const [ display, setDisplay ] = useState({
-    deckOptionsButton: false,
     deckOptions: false,
     deleteDeckConfirmation: false
   });
@@ -51,8 +51,6 @@ export const Deck = ({ deck }) => {
       ...style.root,
       backgroundColor: deck_color
     }}
-    onMouseEnter={() => toggleDisplay('deckOptionsButton')}
-    onMouseLeave={() => toggleDisplay('deckOptionsButton')}
     onClick={() => history.push(`/${localStorage.getItem('username')}/decks/${deck_id}/cards`)}
   >
 
@@ -67,31 +65,45 @@ export const Deck = ({ deck }) => {
       </div>
 
 
-      {display.deckOptionsButton && (
-      
       <div>
+        <div 
+          style={{
+            display: "flex",
+            flexFlow: "row-reverse wrap"
+          }}
+        >
+
         <button
+          style={{
+            padding: ".25rem"
+          }}
           onClick={(e) => {
             e.stopPropagation();
             toggleDisplay('deckOptions')
           }}
-        >...</button>
-
+        >{display.deckOptions ? '<' : 'v'}</button>
+        
         {display.deckOptions && (
-          <div>
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "row wrap",
+              alignItems: "center"
+            }}
+          >
             <button 
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(DeckAction.deleteById(deck_id));
               }}
-            >Delete</button>
+              >Delete</button>
           </div>
         )}
 
+        </div>
+      
       </div>
       
-      )}
-    
     </div>
 
   </div>

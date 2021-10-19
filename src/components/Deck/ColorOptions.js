@@ -35,35 +35,40 @@ const colors = [
   }
 ];
 
+const styles = {
+  root: {
+    width: '95%',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: '.5rem',
+    paddingBottom: '.5rem'
+  },
+  colorContainer: {
+    width: '75%',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: '.25rem',
+    paddingBottom: '.25rem'
+  }
+};
+
 export const ColorOptions = ({ values, setValues }) => {
   return (
-  <div className="colorOptions" 
-  >
-
-  <div  
-    style={{
-      display: "flex",
-      flexFlow: 'column wrap',
-      alignItems: 'flex-start',
-      paddingTop: '.5rem',
-      paddingBottom: '.5rem'
-    }}
-  >
+  <div style={styles.root}>
+    
     <label>Color:</label>
-    <div
-      style={{
-        display: "flex",
-        flexFlow: 'row wrap',
-        alignItems: 'center',
-        paddingTop: '.25rem',
-        paddingBottom: '.25rem'
-      }}
-    >
+    
+    <div style={styles.colorContainer}>
       {colors.map(color => (
         <ColorOption key={color.hex} color={color} values={values} setValues={setValues} />
       ))}
     </div>
+
   </div>
-  </div>
+
   );
 }

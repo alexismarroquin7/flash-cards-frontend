@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ColorOptions } from "./ColorOptions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Deck } from "../../store";
 
@@ -10,10 +10,22 @@ const style = {
     flexFlow: 'column wrap',
     alignItems: 'center'
   },
-  textInput: {
+  header: {
+    width: '95%',
     display: 'flex',
     flexFlow: 'column wrap',
     alignItems: 'flex-start'
+  },
+  textLabel: {
+    width: '95%',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-between',
+    paddingBottom: '.5rem',
+    paddingTop: '.5rem',
+  },
+  textInput: {
+    width: '75%'
   },
   button: {
     marginTop: '.5rem'
@@ -31,6 +43,7 @@ export const NewDeckForm = () => {
   
   const dispatch = useDispatch();
   const history = useHistory();
+  const username = useSelector(s => s.auth.username);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -56,13 +69,21 @@ export const NewDeckForm = () => {
     }
     
   };
+
+  const handleCancelSubmit = () => {
+    setValues(initialFormValues);
+    history.push(`/${username}/decks`);
+  };
   
   return (
     <form className="NewDeckForm" onSubmit={handleSubmit} style={style.root}>
-      <h3>New Deck</h3>
+      <div style={style.header}>
+        <h3>New Deck</h3>
+      </div>
       
-      <label style={style.textInput}>Name:
+      <label style={style.textLabel}>Name:
         <input 
+          style={style.textInput}
           name="deck_name"
           type="text"
           value={values.deck_name}
@@ -73,8 +94,9 @@ export const NewDeckForm = () => {
       
       <ColorOptions values={values} setValues={setValues}/>
 
-      <label style={style.textInput}>Description:
+      <label style={style.textLabel}>Description:
         <textarea 
+          style={style.textInput}
           name="deck_decription"
           type=""
           value={values.deck_description}
@@ -83,7 +105,11 @@ export const NewDeckForm = () => {
         />
       </label>
 
-      <button style={style.button} type="submit">Submit</button>
+      <div>
+        <button style={style.button} onClick={handleCancelSubmit}>Cancel</button>
+        <button style={style.button} type="submit">Submit</button>
+      </div>
+
     </form>
   );
 }
