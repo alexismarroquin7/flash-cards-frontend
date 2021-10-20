@@ -40,6 +40,7 @@ const initialFormValues = {
 
 export const NewDeckForm = () => {
   const [values, setValues] = useState(initialFormValues);
+  const [ buttonDisabled, setButtonDisabled ] = useState(false);
   
   const dispatch = useDispatch();
   const history = useHistory();
@@ -54,18 +55,26 @@ export const NewDeckForm = () => {
     })
 
   };
+
+  const toggleButtonDisabled = () => setButtonDisabled(!buttonDisabled);
   
   const handleSubmit = e => {
     e.preventDefault();
+    toggleButtonDisabled();
 
-    const validName = Boolean(values.deck_name.length > 0)
-    const validColor = Boolean(values.deck_color.length > 0)
+    const validName = Boolean(values.deck_name.trim().length > 0)
+    const validColor = Boolean(values.deck_color.trim().length > 0)
 
     if(validName && validColor){
-      dispatch(Deck.create(values));
+      dispatch(Deck.create({
+        deck_name: values.deck_name.trim(),
+        deck_color: values.deck_color,
+        deck_description: values.deck_description.length !== 0 ? values.deck_description.trim() : null
+      }));
+
       setTimeout(() => {
-        history.push(`/${localStorage.getItem('username')}/decks`)
-      }, 3000);
+        history.push(`/${username}/decks`)
+      }, 1500);
     }
     
   };
@@ -97,7 +106,7 @@ export const NewDeckForm = () => {
       <label style={style.textLabel}>Description:
         <textarea 
           style={style.textInput}
-          name="deck_decription"
+          name="deck_description"
           type=""
           value={values.deck_description}
           onChange={handleChange}
@@ -107,7 +116,7 @@ export const NewDeckForm = () => {
 
       <div>
         <button style={style.button} onClick={handleCancelSubmit}>Cancel</button>
-        <button style={style.button} type="submit">Submit</button>
+        <button style={style.button} type="submit" disabled={buttonDisabled}>Submit</button>
       </div>
 
     </form>
