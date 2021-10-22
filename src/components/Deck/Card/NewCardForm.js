@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { Card as CardAction } from "../../../store";
+import { useToggle } from "../../../hooks";
 
 const style = {
   root: {
@@ -49,6 +50,8 @@ const initialFormValues = {
 
 export const NewCardForm = () => {
   const [values, setValues] = useState(initialFormValues);
+  const [disabled, setDisabled] = useToggle(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
@@ -110,6 +113,7 @@ export const NewCardForm = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    setDisabled();
     
     const valid = {
       panel_a: {
@@ -118,7 +122,6 @@ export const NewCardForm = () => {
     };
 
     if(valid.panel_a.text){
-
       dispatch(
         CardAction.create(values)
       );
@@ -127,7 +130,7 @@ export const NewCardForm = () => {
         history.push(
           `/${localStorage.getItem('username')}/decks/${params.deck_id}/cards`
         );
-      }, 2500);
+      }, 2000);
     }
   }
 
@@ -188,7 +191,10 @@ export const NewCardForm = () => {
             setValues(initialFormValues);
           }}
         >Cancel</button>
-        <button type="submit">Submit</button>
+        <button 
+          type="submit"
+          disabled={disabled}
+        >Submit</button>
       </div>
 
     </form>
