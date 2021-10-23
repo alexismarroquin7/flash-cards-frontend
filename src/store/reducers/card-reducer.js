@@ -112,8 +112,51 @@ export const cardReducer = (state = initialState, action) => {
           }
         }
       }
-      
-    default:
+    
+    case Card.DELETE.START:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: true,
+          error: {
+            ...state.status.error,
+            message: ""
+          }
+        }
+        
+      }
+    case Card.DELETE.SUCCESS:
+      return {
+        ...state,
+        list: [
+          ...state.list.filter(card => card.card_id !== Number(action.payload.data.card_id))
+        ],
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: ""
+          }
+        }
+
+      }
+    case Card.DELETE.FAIL:
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          loading: false,
+          error: {
+            ...state.status.error,
+            message: action.payload.error.message
+          }
+        }
+
+      }
+    
+      default:
       return state;
   }
 }

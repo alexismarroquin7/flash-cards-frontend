@@ -16,6 +16,11 @@ const ACTION = {
     SUCCESS: 'CARD__CREATE--SUCCESS',
     FAIL: 'CARD__CREATE--FAIL'
   },
+  DELETE: {
+    START: 'CARD__DELETE--START',
+    SUCCESS: 'CARD__DELETE--SUCCESS',
+    FAIL: 'CARD__DELETE--FAIL'
+  },
 }
 
 
@@ -115,9 +120,35 @@ const create = ({
   }
 }
 
+const deletedById = (card_id) => async dispatch => {
+  dispatch({
+    type: ACTION.DELETE.START
+  });
+
+  try {
+    const res = await axiosWithAuth().delete(`/cards/${card_id}`);
+
+    dispatch({
+      type: ACTION.DELETE.SUCCESS,
+      payload: {
+        data: res.data
+      }
+    });
+
+  } catch(err) {
+    dispatch({
+      type: ACTION.DELETE.FAIL,
+      payload: {
+        error: err.response
+      }
+    });
+  }
+};
+
 export const Card = {
   ...ACTION,
   fetchByDeckId,
   fetchById,
-  create
+  create,
+  deletedById
 }
